@@ -191,7 +191,7 @@ void saveSettingsToSD() {
 		SD.remove("/config.txt");
 	}
 
-	configFile = SD.open("/config.txt", O_WRITE);    
+	configFile = SD.open("/config.txt", FILE_WRITE);    
 	if (configFile) {
 		snprintf(buffer, sizeof(buffer), "%02d%d", volume, autoBrightness ? 1 : 0);
 		configFile.print(buffer);
