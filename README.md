@@ -1,4 +1,4 @@
-# AVR MP3 Player
+# MP3 Player
 
 **Author:** Necula Mihail
 
