@@ -385,8 +385,6 @@ The letter **"A"** in the top-right corner of the Playlists and Songs menus sign
 
 </center>
 
-<br>
-
 <center>
 
 **Select Song Menu**
@@ -394,8 +392,6 @@ The letter **"A"** in the top-right corner of the Playlists and Songs menus sign
 <img src="media/songs_menu.jpg" alt="Songs Menu" width="500">
 
 </center>
-
-<br>
 
 <center>
 
@@ -405,7 +401,6 @@ The letter **"A"** in the top-right corner of the Playlists and Songs menus sign
 
 </center>
 
-<br>
 <br>
 
 [Video Demo:](https://drive.google.com/file/d/1Ql3m_4e88D5WX5pUAxLVWdrxtVmwBFEr/view?usp=sharing) Please increase your device volume to hear the music properly, as it was recorded at a low volume at night.
