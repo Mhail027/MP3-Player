@@ -80,7 +80,7 @@ The software is organized into the next main logical **modules** to ensure maint
 ### A. Bill of Materials
 
 | Component | Amount |
-| --- | --- |
+| :---: | :---: |
 | MEGA 2560 Development Board (16U2) | 1 |
 | MB-102 Breadboard (830 Points) | 2 |
 | AC/DC Power Adapter  (5V, 2A, 5.5x2.5mm) | 1 |
@@ -113,7 +113,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### Rotary Encoder
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | CLK | D2 | PE4 | External Interrupt 4 <br> (for rotation) |
 | DT | D3 | PE5 | External Interrupt 5 <br> (for direction) |
 | SW | D4 | PG5 | Digital Input <br> (for click) |
@@ -123,7 +123,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### Buttons
 
 | Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | SW1 | D5 | PE3 | Digital Input |
 | SW2 | D6 | PH3 | Digital Input |
 | SW3 | D7 | PH4 | Digital Input |
@@ -132,7 +132,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### Light Sensor
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | SCL | D21 | PD0 | I2C Clock |
 | SDA | D20 | PD1 | I2C Data |
 | VCC | 5V | - | Power Supply |
@@ -141,7 +141,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### RGB LED (Common Cathode)
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | Red | D8 | PH5 | PWM |
 | Green | D9 | PH6 | PWM |
 | Blue | D10 | PB4 | PWM |
@@ -150,7 +150,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### OLED Display
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | SCL | D21 | PD0 | I2C Clock |
 | SDA | D20 | PD1 | I2C Data |
 | VCC | 5V | - | Power Supply |
@@ -159,7 +159,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### MP3 Decoder
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | RX | D18 | PD3 | UART RX |
 | TX | D19 | PD2 | UART TX |
 | VCC | 5V | - | Power Supply |
@@ -168,7 +168,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### MicroSD Card Module
 
 | Pin Component | Pin Arduino | Pin Microcontroller | Notes |
-| --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: |
 | MISO | D50 | PB3 | SPI Master In Slave Out |
 | MOSI | D51 | PB2 | SPI Master Out Slave In |
 | SCK | D52 | PB1 | SPI Serial Clock |
@@ -179,7 +179,7 @@ The software is organized into the next main logical **modules** to ensure maint
 #### Speaker
 
 | Pin Component | Pin MP3 Decoder |
-| --- | --- |
+| :---: | :---: |
 | + (Positive) | SPK_1 |
 | - (Negative) | SPK_2 |
 
@@ -190,7 +190,7 @@ This chapter details the additional hardware required to protect the main module
 #### Resistors
 
 | Value | Description |
-| --- | --- |
+| :---: | :---: |
 | 220 Ω | **Current Limiting:** Protects the RGB LED from overcurrent. |
 | 1 KΩ | **Logic Level Adaptation & Noise Suppression:** Placed in series with the MP3 decoder's RX pin. It limits current to safely interface the 5V logic of the ATmega 2560 with the 3.3V internal logic of the MP3-TF-16P, while absorbing digital switching spikes to eliminate audible hum and clicking noise. |
 | 20-50 KΩ | **Internal Pull-ups:** Enabled in software for the Buttons and Encoder Switch to ensure a stable HIGH state when not pressed. |
@@ -198,13 +198,13 @@ This chapter details the additional hardware required to protect the main module
 #### Capacitors
 
 | Type | Value | Description |
-| --- | --- | --- |
+| :---: | :---: | :---: |
 | Electrolytic | 100 μF | **Bulk Storage:** Electrolytic type is used for its high energy density. It acts as a reservoir to handle sudden power surges from the amplifier. Crucially, it stabilizes the VCC rail during high-current flash memory operations. Without it, transient voltage drops caused frequent corruption of the metadata microSD card, requiring files to be re-uploaded. |
 
 #### Others
 
 | Component | Description |
-| --- | --- |
+| :---: | :---: |
 | Clipband | **I2C Connection Guard:** Placed directly under the BH1750 light sensor and tied to it. This ensures the module remains locked to the pins and prevents I2C bus crashes caused by physical movement. |
 | Heat-Resistant Kapton Tape | **Contact Preservation:** Applied over the speaker terminals to keep the tied wires firmly in place against physical movement and vibrations, ensuring a stable and uninterrupted audio signal. |
 
@@ -308,8 +308,8 @@ Choke me
 
 ### E. User Interface Functional Mapping
 
-| Inout | Current State | Action / Functionality |
-| --- | --- | --- |
+| Input | Current State | Action / Functionality |
+| :---: | :---: | :---: |
 | **SW_1** | SELECT_PLAYLIST | Scrolls **UP** through the playlist list. |
 | | SELECT_SONG | Scrolls **UP** through the song list. |
 | | SONG_SELECTED | Skips to the **PREVIOUS** song. |
