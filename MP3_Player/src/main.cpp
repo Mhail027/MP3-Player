@@ -22,6 +22,14 @@
 
 #define SD_CS_PIN      53
 
+/* --- I2C --- */
+#define SCL 		   PD0
+#define SDA			   PD1
+
+/* --- UART --- */
+#define RX1 		   PD2
+#define TX1			   PD3
+
 /* --- OTHERS --- */
 #define MAX_NAME_LEN        50
 #define MAX_PATH_LEN        11
@@ -107,12 +115,12 @@ void setupOutputs() {
 }
 
 void setupTimersPwm() {
-	/* Timer 4 (16-bit) -> Fast PWM 8-bit, Prescaler = 8, Switch LED_R at threshold */
+	/* Timer 4 (16-bit) - Fast PWM 8-bit, Prescaler = 8, Switch LED_R at threshold */
 	TCCR4A = _BV(COM4C1) | _BV(WGM40);
 	TCCR4B = _BV(WGM42)  | _BV(CS41);
 	OCR4C  = 0; /* LED_R threshold */
 
-	/* Timer 2 (8-bit) -> Fast PWM complete, Prescaler = 8, Switch LED_R and LED_B at thresholds */
+	/* Timer 2 (8-bit) - Fast PWM complete, Prescaler = 8, Switch LED_G and LED_B at thresholds */
 	TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS21);
 	OCR2B  = 0; /* LED_G threshold */
@@ -319,6 +327,18 @@ void computeCurrSongTime() {
 // =========================================================
 
 void setupPlayer() {
+	DDRD |= _BV(TX1);
+	DDRD &= ~_BV(RX1);
+	PORTD |= _BV(RX1);
+
+	// UBRR = (F_CPU / (16 * Baud)) - 1
+	// (16 000 000 / (16 * 9600)) - 1 = 103.16 => 103
+	UBRR1 = 103;
+	UCSR1A = 0x00;
+	UCSR1B = _BV(RXEN1) | _BV(TXEN1);
+	UCSR1C = _BV(UCSZ11) | _BV(UCSZ10);
+
+	delay(50);
 	Serial1.begin(9600);
 	if (musicPlayer.begin(Serial1)) {
 		musicPlayer.volume(volume);
@@ -562,7 +582,7 @@ void drawPlayerScreen() {
 	if (forceFullRedraw) {
 		screen.clearBuffer();
 		
-		// Playlist mame
+		// Playlist name
 		screen.setClipWindow(0, 0, 128, 14);
 		screen.setDrawColor(1); screen.drawUTF8(5, 12, currPlaylistName);
 		screen.setMaxClipWindow();
@@ -645,18 +665,38 @@ void drawInterface() {
 }
 
 // =========================================================================
+// === I2C ===
+// =========================================================================
+
+void setupI2C() {
+	// Configure SCL and SDA as inputs and enable internal pull-ups
+	DDRD  &= ~(_BV(SCL) | _BV(SDA)); 
+	PORTD |=  (_BV(SCL) | _BV(SDA));
+
+	// Set the I2C Prescaler to 1
+	TWSR &= ~(_BV(TWPS1) | _BV(TWPS0));
+
+	// Set Bit Rate Register to 12 for 400kHz clock speed
+	// SCL_Frequency = F_CPU / (16 + 2 * TWBR * (4 ^ TWPS))
+	// 16MHz / (16 + 2 * 12 * 1) = 400kHz
+	TWBR = 12;
+
+	// Enable I2C 
+	TWCR = _BV(TWEN);
+}
+
+// =========================================================================
 // === ARDUINO CORE FUNCTIONS (SETUP & LOOP) ===
 // =========================================================================
 
 void setup() {
-	// Init GPIO, TIMERS and INTERRUPTS
 	setupInputs();
 	setupOutputs();
 	setupTimersPwm();
 	setupExternalInterrupts();
 
-	Wire.begin(); 				
-	Wire.setClock(400000); 
+	Wire.begin();
+	Wire.setClock(400000);
 	setupLightSensor();
 	setupOLED();
 	loadSettingsFromSD();
